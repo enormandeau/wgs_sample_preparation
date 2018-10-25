@@ -1,0 +1,15 @@
+*~
+00_archive/*
+02_info/*
+03_genome/*
+04_raw_data/*
+05_trimmed/01_reports/*
+06_aligned/*
+07_deduplicated/*
+08_realigned/*
+09_no_overlap/*
+98_metrics/*
+99_log_files/*
+*.gz
+*.bam
+*.bai
