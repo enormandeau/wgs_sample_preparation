@@ -12,6 +12,7 @@ GENOME="genome.fasta"
 
 # Load needed modules
 module load bamUtil
+module load samtools/1.8
 
 # Copy script to log folder
 TIMESTAMP=$(date +%Y-%m-%d_%Hh%Mm%Ss)
