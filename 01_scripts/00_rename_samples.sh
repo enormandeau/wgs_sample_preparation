@@ -22,6 +22,7 @@ if [[ ! -d "$input_folder" || ! -d "$output_folder" || ! -e "$correspondance_fil
 then
     echo "Usage:"
     echo "    <program> input_folder output_folder correspondance_file"
+    exit
 fi
 
 # Rename each file using "ln"
