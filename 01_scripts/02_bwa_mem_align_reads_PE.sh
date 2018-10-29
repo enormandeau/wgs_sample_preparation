@@ -20,7 +20,7 @@ module load bwa
 module load samtools/1.8
 
 # Index genome if not alread done
-bwa index -p "$GENOMEFOLDER"/"$GENOME" "$GENOMEFOLDER"/"$GENOME"
+#bwa index -p "$GENOMEFOLDER"/"$GENOME" "$GENOMEFOLDER"/"$GENOME"
 
 # Iterate over sequence file pairs and map with bwa
 for file in $(ls -1 "$RAWDATAFOLDER"/*_1.trimmed.fastq.gz)
@@ -34,13 +34,15 @@ do
     ID="@RG\tID:ind\tSM:ind\tPL:Illumina"
 
     # Align reads
-    # TODO but <bwa mem> and <samtools sort> in the same pipeline
     bwa mem -t "$NCPU" -R "$ID" "$GENOMEFOLDER"/"$GENOME" "$RAWDATAFOLDER"/"$name" "$RAWDATAFOLDER"/"$name2" |
     samtools view -Sb -q 10 - > "$ALIGNEDFOLDER"/"${name%.fastq.gz}".bam
 
-    # Sort and index
-    samtools sort "$ALIGNEDFOLDER"/"${name%.fastq.gz}".bam > "$ALIGNEDFOLDER"/"${name%.fastq.gz}".sorted.bam
-    samtools index "$ALIGNEDFOLDER"/"${name%.fastq.gz}".sorted.bam
+    # Sort
+    samtools sort --threads "$NCPU" "$ALIGNEDFOLDER"/"${name%.fastq.gz}".bam \
+        > "$ALIGNEDFOLDER"/"${name%.fastq.gz}".sorted.bam
+
+    # Index
+    samtools index --threads "$NCPU" "$ALIGNEDFOLDER"/"${name%.fastq.gz}".sorted.bam
 
     # Remove unsorted bam file
     rm "$ALIGNEDFOLDER"/"${name%.fastq.gz}".bam
