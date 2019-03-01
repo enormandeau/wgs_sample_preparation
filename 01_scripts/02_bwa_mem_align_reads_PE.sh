@@ -42,7 +42,7 @@ do
         > "$ALIGNEDFOLDER"/"${name%.fastq.gz}".sorted.bam
 
     # Index
-    samtools index --threads "$NCPU" "$ALIGNEDFOLDER"/"${name%.fastq.gz}".sorted.bam
+    samtools index "$ALIGNEDFOLDER"/"${name%.fastq.gz}".sorted.bam
 
     # Remove unsorted bam file
     rm "$ALIGNEDFOLDER"/"${name%.fastq.gz}".bam
