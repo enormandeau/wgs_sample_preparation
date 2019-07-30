@@ -22,6 +22,8 @@ module load java/jdk/1.8.0_102
 ls -1 "$ALIGNEDFOLDER"/*.bam |
 while read file
 do
+    echo "Deduplicating sample $file"
+
     java -jar "$MARKDUPS" \
         INPUT="$file" \
         OUTPUT="$DEDUPFOLDER"/$(basename "$file" .trimmed.sorted.bam).dedup.bam \
