@@ -1,7 +1,9 @@
 *.bai
 *.bam
 *.gz
+*.log
 *.txt
+*_log*
 *~
 00_archive/*
 02_info/*
@@ -14,4 +16,5 @@
 09_no_overlap/*
 98_metrics/*
 99_log_files/*
+log_*
 samples_split/*
