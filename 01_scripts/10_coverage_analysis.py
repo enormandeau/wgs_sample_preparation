@@ -86,7 +86,7 @@ with myopen(input_beagle) as infile:
 
         # Q1a: Write coverage_summary
         coverage_summary = [scaffold, position, mean, sd, minimum, maximum, total]
-        coverage_summary_line = "\t".join([str(x)[:6] for x in coverage_summary]) + "\n"
+        coverage_summary_line = "\t".join([str(x) for x in coverage_summary]) + "\n"
         output1.write(coverage_summary_line)
 
         # Q1b Gather coverage_summary info for sliding window
