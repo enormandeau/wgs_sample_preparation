@@ -7,8 +7,6 @@ GATK="/home/clrou103/00-soft/GATK/GenomeAnalysisTK.jar"
 DEDUPFOLDER="07_deduplicated"
 REALIGNFOLDER="08_realigned"
 CLIPFOLDER="09_no_overlap"
-GENOMEFOLDER="03_genome"
-GENOME="genome.fasta"
 
 # Load needed modules
 module load bamUtil
