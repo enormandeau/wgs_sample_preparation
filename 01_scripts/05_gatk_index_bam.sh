@@ -1,6 +1,6 @@
 #!/bin/bash
-# 1 CPU
-# 10 Go
+# 10 CPU
+# 100 Go
 
 # Global variables
 BAMINDEX="/prg/picard-tools/1.119/BuildBamIndex.jar"
@@ -17,8 +17,12 @@ LOG_FOLDER="99_log_files"
 cp "$SCRIPT" "$LOG_FOLDER"/"$TIMESTAMP"_"$NAME"
 
 # Build Bam Index
+#ls -1 "$DEDUPFOLDER"/*.dedup.bam |
+#while read file
+#do
+#    java -jar "$BAMINDEX" INPUT="$file"
+#done
+
+# Build Bam Index in parallel
 ls -1 "$DEDUPFOLDER"/*.dedup.bam |
-while read file
-do
-    java -jar "$BAMINDEX" INPUT="$file"
-done
+    parallel -j 10 java -jar "$BAMINDEX" INPUT={}

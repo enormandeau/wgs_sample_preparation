@@ -1,6 +1,6 @@
 #!/bin/bash
-# 1 CPU
-# 10 Go
+# 10 CPU
+# 100 Go
 
 # Global variables
 GATK="/home/clrou103/00-soft/GATK/GenomeAnalysisTK.jar"
@@ -20,14 +20,18 @@ LOG_FOLDER="99_log_files"
 cp "$SCRIPT" "$LOG_FOLDER"/"$TIMESTAMP"_"$NAME"
 
 # Realign around target previously identified
+#ls -1 "$DEDUPFOLDER"/*dedup.bam |
+#while read file
+#do
+#    java -jar $GATK \
+#        -T IndelRealigner \
+#        -R "$GENOMEFOLDER"/"$GENOME" \
+#        -I "$file" \
+#        -targetIntervals "${file%.dedup.bam}".intervals \
+#        --consensusDeterminationModel USE_READS  \
+#        -o "$REALIGNFOLDER"/$(basename "$file" .dedup.bam).realigned.bam
+#done
+
+# Realign around target previously identified in parallel
 ls -1 "$DEDUPFOLDER"/*dedup.bam |
-while read file
-do
-    java -jar $GATK \
-        -T IndelRealigner \
-        -R "$GENOMEFOLDER"/"$GENOME" \
-        -I "$file" \
-        -targetIntervals "${file%.dedup.bam}".intervals \
-        --consensusDeterminationModel USE_READS  \
-        -o "$REALIGNFOLDER"/$(basename "$file" .dedup.bam).realigned.bam
-done
+    parallel -j 10 java -jar $GATK -T IndelRealigner -R "$GENOMEFOLDER"/"$GENOME" -I {} -targetIntervals {}.intervals --consensusDeterminationModel USE_READS  -o "$REALIGNFOLDER"/{/}.realigned.bam
