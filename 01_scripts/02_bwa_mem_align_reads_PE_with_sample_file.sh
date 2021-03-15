@@ -8,7 +8,7 @@
 
 # First split sample list to align into different files with:
 # cd 05_trimmed
-# ls -1 *.fastq.gz > ../all_samples_for_alignment.txt
+# ls -1 *_1\.trimmed.fastq.gz > ../all_samples_for_alignment.txt
 # cd ..
 # mkdir samples_split
 # split -a 4 -l 100 -d all_samples_for_alignment.txt samples_split/samples_split.
