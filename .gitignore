@@ -17,4 +17,5 @@
 98_metrics/*
 99_log_files/*
 log_*
+numreads_per_sample_*
 samples_split/*
