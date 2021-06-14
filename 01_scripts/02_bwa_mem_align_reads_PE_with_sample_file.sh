@@ -40,6 +40,7 @@ while read file
 do
     # Name of uncompressed file
     file2=$(echo "$file" | perl -pe 's/_1\.trimmed/_2.trimmed/')
+    echo
     echo "Aligning file $file $file2" 
 
     name=$(basename "$file")
@@ -49,6 +50,15 @@ do
     echo "$name"
     echo "$name2"
     echo
+
+    # If name and name2 are the same, file names were not parsed properly
+    if [[ "$name" == "$name2" ]]
+    then
+        echo "ERROR: Forward and reverse files are the same"
+        echo "-> Check file name parsing on line starting with 'file2='"
+        echo
+        exit 1
+    fi
 
     # Align reads
     bwa mem -t "$NCPU" -R "$ID" "$GENOMEFOLDER"/"$GENOME" "$RAWDATAFOLDER"/"$name" "$RAWDATAFOLDER"/"$name2" |
