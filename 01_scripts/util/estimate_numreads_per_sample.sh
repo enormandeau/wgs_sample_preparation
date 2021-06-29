@@ -11,16 +11,16 @@ rm $output_file
 module load samtools
 
 # Fastq files
-for fastq in $(ls -1 "$input_folder"/*.fastq.gz)
+for fastq in $(ls -1 "$input_folder"/*R1P.fastq.gz)
 do
     base=$(basename "$fastq")
     temp=."$base".deleteme
 
-    # Extract last 10K of the first 100K reads
-    gunzip -c "$fastq" | head -400000 | tail -40000 | gzip -c - > "$temp"
+    # Extract last 10K of the first 50K reads
+    gunzip -c "$fastq" | head -200000 | tail -40000 | gzip -c - > "$temp"
     size_subset=$(ls -l "$temp" | awk '{print $5}')
     size_full=$(ls -l "$fastq" | awk '{print $5}')
-    numreads=$(echo 10000 $size_subset $size_full | awk '{print $1 * $3 / $2}')
+    numreads=$(echo 10000 $size_subset $size_full | awk '{print 2 * $1 * $3 / $2}')
     echo -e "$base\t$numreads"
 
     # Cleanup
@@ -32,16 +32,7 @@ done | tee "$output_file"_fastq
 for bamfile in $(ls -1 "$input_folder"/*.bam)
 do
     base=$(basename "$bamfile")
-    temp=."$base".deleteme
-
-    # Extract last 10K of the first 100K reads
-    samtools view -h "$bamfile" | head -100000 | samtools view -Sb - > "$temp"
-    size_subset=$(ls -l "$temp" | awk '{print $5}')
-    size_full=$(ls -l "$bamfile" | awk '{print $5}')
-    numreads=$(echo 100000 $size_subset $size_full | awk '{print $1 * $3 / $2}')
+    numreads=$(samtools idxstats "$bamfile" | awk '{s+=$3}END{print s}')
     echo -e "$base\t$numreads"
-
-    # Cleanup
-    rm "$temp"
 done | tee "$output_file"_bam
 [ -s "$output_file"_bam ] || rm "$output_file"_bam
