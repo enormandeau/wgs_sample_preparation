@@ -25,5 +25,5 @@ module load java/jdk/1.8.0_102
 
 # Remove duplicates from bam alignments in parallel
 ls -1 "$ALIGNEDFOLDER"/*.bam |
-    parallel -j 10 echo "Deduplicating sample {}" \; java -jar "$MARKDUPS" INPUT={} OUTPUT="$DEDUPFOLDER"/{/}.dedup.bam METRICS_FILE="$METRICSFOLDER"/metrics.txt VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
+    parallel -j 10 echo "Deduplicating sample {}" \; java -jar "$MARKDUPS" INPUT={} OUTPUT="$DEDUPFOLDER"/{/}.dedup.bam METRICS_FILE="$METRICSFOLDER"/metrics.txt VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true MAX_FILE_HANDLES=100
 #done
