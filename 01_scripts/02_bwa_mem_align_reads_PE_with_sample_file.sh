@@ -32,7 +32,7 @@ fi
 
 # Load needed modules
 module load bwa
-module load samtools/1.8
+module load samtools
 
 # Index genome if not alread done
 #bwa index -p "$GENOMEFOLDER"/"$GENOME" "$GENOMEFOLDER"/"$GENOME"
