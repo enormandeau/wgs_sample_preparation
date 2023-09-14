@@ -17,9 +17,9 @@ CPU=1                                                            # number of thr
 REHEADER_DIR="10_reheader_RG"                                    # output directory for corrected bam files
 
 # LOAD REQUIRED MODULES
-module load samtools/1.15 # Recent version is required for the -w to work and overwrite existing RG in the header (1.15.1 on superdome)
+module load samtools/1.15 # Recent version is required for the -w option to work and overwrite existing RG in the header (1.15.1 on superdome)
 
-# 0. Create new directory for edited bam files, if required
+# 0. Create new directory for edited bam files if required
 if [[ ! -d $REHEADER_DIR ]]
 then
   mkdir $REHEADER_DIR
