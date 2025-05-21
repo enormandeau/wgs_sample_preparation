@@ -46,13 +46,15 @@ do
     echo
     echo "Aligning file $file $file2" 
 
+    sample=$(basename -s '_1.trimmed.fastq.gz' "$file")
     name=$(basename "$file")
     name2=$(basename "$file2")
-    ID="@RG\tID:ind\tSM:ind\tPL:Illumina"
+    
+    # Format read group tag string with sample name
+    ID=$(echo -e "@RG\tID:$sample\tSM:$sample\tPL:Illumina")
 
     echo "$name"
     echo "$name2"
-    echo
 
     # If name and name2 are the same, file names were not parsed properly
     if [[ "$name" == "$name2" ]]
