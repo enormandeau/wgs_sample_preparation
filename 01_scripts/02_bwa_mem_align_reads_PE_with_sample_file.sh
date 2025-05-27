@@ -51,7 +51,7 @@ do
     name2=$(basename "$file2")
     
     # Format read group tag string with sample name
-    ID=$(echo -e "@RG\tID:$sample\tSM:$sample\tPL:Illumina")
+    ID="@RG\tID:$sample\tSM:$sample\tPL:Illumina"
 
     echo "$name"
     echo "$name2"
