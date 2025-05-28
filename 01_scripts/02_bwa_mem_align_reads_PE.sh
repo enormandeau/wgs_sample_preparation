@@ -29,9 +29,12 @@ do
     file2=$(echo "$file" | perl -pe 's/_1\.trimmed/_2.trimmed/')
     echo "Aligning file $file $file2" 
 
+    sample=$(basename -s '_1.trimmed.fastq.gz' "$file")
     name=$(basename "$file")
     name2=$(basename "$file2")
-    ID="@RG\tID:ind\tSM:ind\tPL:Illumina"
+    
+    # Format read group tag string with sample name
+    ID="@RG\tID:$sample\tSM:$sample\tPL:Illumina"
 
     # Align reads
     bwa mem -t "$NCPU" -R "$ID" "$GENOMEFOLDER"/"$GENOME" "$RAWDATAFOLDER"/"$name" "$RAWDATAFOLDER"/"$name2" |
