@@ -38,7 +38,7 @@ do
 
     # Align reads
     bwa mem -t "$NCPU" -R "$ID" "$GENOMEFOLDER"/"$GENOME" "$RAWDATAFOLDER"/"$name" "$RAWDATAFOLDER"/"$name2" |
-    samtools view -Sb -q 10 - > "$ALIGNEDFOLDER"/"${name%.fastq.gz}".bam
+    samtools view -Sb -q 30 - > "$ALIGNEDFOLDER"/"${name%.fastq.gz}".bam
 
     # Sort
     samtools sort --threads "$NCPU" "$ALIGNEDFOLDER"/"${name%.fastq.gz}".bam \
